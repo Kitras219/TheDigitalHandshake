@@ -1,0 +1,56 @@
+---
+// Importujemy komponent karty projektu, aby móc go używać w pętli
+import ProjectCard from "./projectcard.astro";
+
+// Definiujemy dane dla naszych projektów. W przyszłości mogą one pochodzić z CMS-a.
+const projects = [
+  {
+    title: "Optymalizacja Procesu Produkcyjnego",
+    description:
+      "Analiza i wdrożenie usprawnień, które skróciły czas cyklu o 15% i zredukowały ilość odpadów.",
+    img: "/images/project-1.jpg", // POPRAWIONO z imageUrl na img
+    link: "/projekty/optymalizacja-procesu",
+  },
+  {
+    title: "Aplikacja do Monitorowania Maszyn CNC",
+    description:
+      "Koncepcja i prototyp aplikacji webowej do zdalnego monitorowania stanu i wydajności maszyn w czasie rzeczywistym.",
+    img: "/images/project-2.jpg", // POPRAWIONO z imageUrl na img
+    link: "/projekty/aplikacja-cnc",
+  },
+  {
+    title: "System Smart Home",
+    description:
+      "Projekt i implementacja autorskiego systemu inteligentnego domu opartego o platformę Home Assistant.",
+    img: "/images/project-3.jpg", // POPRAWIONO z imageUrl na img
+    link: "/projekty/smart-home",
+  },
+];
+---
+
+<section id="projekty" class="py-24 sm:py-32 bg-white/5">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold">Moje Projekty</h2>
+      <p class="text-lg text-white/70 mt-4 max-w-2xl mx-auto">
+        Przykłady, jak łączę wiedzę procesową z rozwiązaniami technologicznymi,
+        aby osiągać wymierne rezultaty.
+      </p>
+    </div>
+
+    <!-- Siatka na karty projektów -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Używamy pętli .map() do wygenerowania karty dla każdego projektu -->
+      {
+        projects.map((project) => (
+          <ProjectCard
+            title={project.title}
+            description={project.description}
+            img={project.img}
+            link={project.link}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

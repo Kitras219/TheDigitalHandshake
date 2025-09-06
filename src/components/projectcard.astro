@@ -1,0 +1,49 @@
+---
+// Ten komponent definiuje wygląd pojedynczej "karty" projektu.
+// Otrzymuje dane (props) od swojego rodzica (Projects.astro).
+export interface Props {
+  img: string;
+  title: string;
+  description: string;
+  link: string;
+}
+
+const { img, title, description, link } = Astro.props;
+---
+
+<a
+  href={link}
+  class="group block bg-zinc-900 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-amber-400/10 transition-all duration-300"
+>
+  <!-- Obrazek -->
+  <div class="overflow-hidden">
+    <img
+      src={img}
+      alt={`Zdjęcie projektu ${title}`}
+      class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+    />
+  </div>
+
+  <!-- Treść -->
+  <div class="p-6">
+    <h3 class="text-xl font-bold mb-2">{title}</h3>
+    <p class="text-white/60 mb-4">{description}</p>
+    <span class="font-semibold text-amber-400 flex items-center">
+      Zobacz więcej
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-arrow-right ml-2 group-hover:translate-x-1 transition-transform"
+      >
+        <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+      </svg>
+    </span>
+  </div>
+</a>
