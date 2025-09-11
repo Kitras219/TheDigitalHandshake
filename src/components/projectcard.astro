@@ -1,49 +1,41 @@
 ---
-// Ten komponent definiuje wygląd pojedynczej "karty" projektu.
-// Otrzymuje dane (props) od swojego rodzica (Projects.astro).
-export interface Props {
-  img: string;
+// Komponent reużywalnej "karty" dla pojedynczego projektu
+
+// Definiujemy, jakie właściwości (props) komponent przyjmuje.
+// Dodajemy opcjonalną właściwość 'imageFit', która domyślnie jest 'cover'.
+interface Props {
   title: string;
   description: string;
+  img: string;
   link: string;
+  imageFit?: "cover" | "contain";
 }
 
-const { img, title, description, link } = Astro.props;
+const { title, description, img, link, imageFit = "cover" } = Astro.props;
 ---
 
 <a
   href={link}
-  class="group block bg-zinc-900 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-amber-400/10 transition-all duration-300"
+  class="group block bg-zinc-900 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-amber-400/10 transition-all duration-300 transform hover:-translate-y-1"
 >
-  <!-- Obrazek -->
-  <div class="overflow-hidden">
+  <!-- Kontener na obrazek -->
+  <div class="aspect-video overflow-hidden">
     <img
       src={img}
       alt={`Zdjęcie projektu ${title}`}
-      class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+      class:list={[
+        "w-full h-full transition-transform duration-300 group-hover:scale-105",
+        // Warunkowo dodajemy klasę w zależności od wartości 'imageFit'
+        imageFit === "contain" ? "object-contain" : "object-cover",
+      ]}
     />
   </div>
-
-  <!-- Treść -->
+  <!-- Kontener na tekst -->
   <div class="p-6">
     <h3 class="text-xl font-bold mb-2">{title}</h3>
-    <p class="text-white/60 mb-4">{description}</p>
-    <span class="font-semibold text-amber-400 flex items-center">
-      Zobacz więcej
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="lucide lucide-arrow-right ml-2 group-hover:translate-x-1 transition-transform"
-      >
-        <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
-      </svg>
+    <p class="text-white/70 mb-4 h-16">{description}</p>
+    <span class="font-semibold text-amber-400 group-hover:underline">
+      Zobacz więcej &rarr;
     </span>
   </div>
 </a>

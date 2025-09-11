@@ -1,11 +1,26 @@
 ---
+// Importujemy globalne style
 import "../styles/global.css";
 
+// Definiujemy właściwości, które może przyjąć nasz layout.
+// Dodajemy opcjonalny opis dla celów SEO.
 interface Props {
   title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description = "Portfolio inżyniera procesu i specjalisty IT, prezentujące projekty z zakresu optymalizacji i automatyzacji.",
+} = Astro.props;
+
+// Tworzymy obiekt z danymi SEO dla łatwiejszego zarządzania
+const seo = {
+  title: `${title} | Portfolio`,
+  description: description,
+  image: `${Astro.url.origin}/social-preview.jpg`, // Pełna ścieżka do obrazka podglądu
+  url: Astro.url.href, // Pełna ścieżka do bieżącej strony
+};
 ---
 
 <!doctype html>
@@ -13,25 +28,25 @@ const { title } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
 
-    <!-- Import czcionki z Google Fonts pasującej do stylu -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Podstawowe Tagi SEO -->
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <link rel="canonical" href={seo.url} />
 
-    <style is:global>
-      /* Definiuje globalną czcionkę dla całej strony */
-      body {
-        font-family: "Poppins", sans-serif;
-      }
-    </style>
+    <!-- Tagi Open Graph (dla podglądów w social media, np. LinkedIn, Facebook) -->
+    <meta property="og:title" content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:url" content={seo.url} />
+    <meta property="og:image" content={seo.image} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pl_PL" />
+
+    <!-- Możesz tu dodać linki do czcionek, np. z Google Fonts -->
   </head>
-  <!-- Ustawia ciemne tło i domyślny kolor tekstu dla całej strony -->
-  <body class="bg-[#0D0D0D] text-gray-200">
+  <body
+    class="bg-zinc-950 text-white font-sans selection:bg-amber-400 selection:text-zinc-900"
+  >
     <slot />
   </body>
 </html>

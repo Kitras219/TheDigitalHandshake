@@ -1,126 +1,126 @@
 ---
-// Komponent paska nawigacji
+// Komponent Paska Nawigacji
 ---
 
-<nav
-  class="bg-zinc-950/70 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 border-b border-white/10"
->
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-20">
-      <!-- Logo -->
-      <a href="/" class="block" aria-label="Strona główna">
-        <img src="/logo.svg" alt="Logo Firmy" class="h-8 w-auto" />
-      </a>
+<header class="bg-zinc-950/70 backdrop-blur-md sticky top-0 z-50">
+  <nav class="container mx-auto px-4 h-20 flex items-center justify-between">
+    <!-- Logo z responsywnym rozmiarem -->
+    <a href="/" class="block" aria-label="Strona główna">
+      <img
+        src="/logo.png"
+        alt="Logo Firmy"
+        class="h-10 md:h-12 lg:h-16 w-auto transition-all duration-300"
+      />
+    </a>
 
-      <!-- Menu na Desktop -->
-      <div class="hidden md:flex space-x-8 items-center">
-        <a
-          href="#o-mnie"
-          class="relative text-white/80 hover:text-amber-400 transition-colors duration-300 after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-amber-400 after:transition-all after:duration-300 hover:after:w-full"
-        >
-          O mnie
-        </a>
-        <a
-          href="#projekty"
-          class="relative text-white/80 hover:text-amber-400 transition-colors duration-300 after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-amber-400 after:transition-all after:duration-300 hover:after:w-full"
-        >
-          Projekty
-        </a>
-        <a
-          href="#kontakt"
-          class="bg-amber-400 hover:bg-amber-500 text-zinc-900 font-bold py-2 px-5 rounded-md transition-colors duration-300"
-        >
-          Kontakt
-        </a>
-      </div>
-
-      <!-- Przycisk Hamburger (Mobile) -->
-      <div class="md:hidden flex items-center">
-        <button
-          id="hamburger-btn"
-          type="button"
-          class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-amber-400 focus:outline-none"
-          aria-controls="mobile-menu"
-          aria-expanded="false"
-        >
-          <span class="sr-only">Otwórz menu główne</span>
-          <!-- Ikona hamburgera (domyślnie widoczna) -->
-          <svg
-            id="icon-open"
-            class="block h-6 w-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
-          </svg>
-          <!-- Ikona 'X' (zamknięcia) - domyślnie ukryta -->
-          <svg
-            id="icon-close"
-            class="hidden h-6 w-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Menu Mobilne (domyślnie ukryte, przełączane przez JS) -->
-  <div id="mobile-menu" class="md:hidden hidden">
-    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+    <!-- Menu Desktop -->
+    <div class="hidden md:flex space-x-8 items-center">
       <a
         href="#o-mnie"
-        class="block text-white/80 hover:text-zinc-900 hover:bg-amber-400 rounded-md px-3 py-2 font-medium transition-colors duration-200"
+        class="relative text-white/80 hover:text-amber-400 transition-colors after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all after:duration-300 hover:after:w-full"
+      >
+        O mnie
+      </a>
+      <a
+        href="#projekty"
+        class="relative text-white/80 hover:text-amber-400 transition-colors after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all after:duration-300 hover:after:w-full"
+      >
+        Projekty
+      </a>
+      <a
+        href="#kontakt"
+        class="bg-amber-400 hover:bg-amber-500 text-zinc-900 font-bold py-2 px-5 rounded-md transition-colors"
+      >
+        Kontakt
+      </a>
+    </div>
+
+    <!-- Przycisk Menu Mobilnego -->
+    <button id="menu-btn" class="md:hidden z-50">
+      <svg
+        id="menu-icon-open"
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 text-white"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+      <svg
+        id="menu-icon-close"
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 text-white hidden"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <!-- Menu Mobilne (zmieniona logika widoczności) -->
+    <div
+      id="mobile-menu"
+      class="md:hidden absolute top-0 left-0 w-full h-screen bg-zinc-950 flex flex-col items-center justify-center space-y-8 text-2xl opacity-0 pointer-events-none transition-opacity duration-300"
+    >
+      <a
+        href="#o-mnie"
+        class="mobile-link text-white/80 hover:text-amber-400 transition-colors"
         >O mnie</a
       >
       <a
         href="#projekty"
-        class="block text-white/80 hover:text-zinc-900 hover:bg-amber-400 rounded-md px-3 py-2 font-medium transition-colors duration-200"
+        class="mobile-link text-white/80 hover:text-amber-400 transition-colors"
         >Projekty</a
       >
       <a
         href="#kontakt"
-        class="block text-white/80 hover:text-zinc-900 hover:bg-amber-400 rounded-md px-3 py-2 font-medium transition-colors duration-200"
+        class="bg-amber-400 hover:bg-amber-500 text-zinc-900 font-bold py-3 px-6 rounded-md transition-colors"
         >Kontakt</a
       >
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
 
 <script>
-  // Pobieramy elementy, którymi będziemy manipulować
-  const hamburgerBtn = document.getElementById("hamburger-btn");
-  const mobileMenu = document.getElementById("mobile-menu");
-  const iconOpen = document.getElementById("icon-open");
-  const iconClose = document.getElementById("icon-close");
+  const menuBtn = document.getElementById("menu-btn") as HTMLButtonElement;
+  const mobileMenu = document.getElementById("mobile-menu") as HTMLDivElement;
+  const menuIconOpen = document.getElementById("menu-icon-open");
+  const menuIconClose = document.getElementById("menu-icon-close");
+  const mobileLinks = document.querySelectorAll(".mobile-link");
 
-  // Sprawdzamy, czy wszystkie elementy na pewno istnieją, zanim dodamy do nich logikę
-  if (hamburgerBtn && mobileMenu && iconOpen && iconClose) {
-    // Dodajemy "nasłuchiwanie" na kliknięcie w przycisk
-    hamburgerBtn.addEventListener("click", () => {
-      // Przełączamy klasę 'hidden', aby pokazać/ukryć menu
-      mobileMenu.classList.toggle("hidden");
-      // Przełączamy widoczność ikon (hamburger / 'X')
-      iconOpen.classList.toggle("hidden");
-      iconClose.classList.toggle("hidden");
+  if (menuBtn && mobileMenu && menuIconOpen && menuIconClose) {
+    const toggleMenu = () => {
+      // Zamiast 'hidden', przełączamy klasy 'opacity' i 'pointer-events'
+      mobileMenu.classList.toggle("opacity-0");
+      mobileMenu.classList.toggle("opacity-100");
+      mobileMenu.classList.toggle("pointer-events-none");
+      mobileMenu.classList.toggle("pointer-events-auto");
 
-      // Aktualizujemy atrybut aria-expanded dla dostępności
-      const isExpanded = hamburgerBtn.getAttribute("aria-expanded") === "true";
-      hamburgerBtn.setAttribute("aria-expanded", String(!isExpanded));
+      menuIconOpen.classList.toggle("hidden");
+      menuIconClose.classList.toggle("hidden");
+
+      document.body.classList.toggle("overflow-hidden");
+    };
+
+    menuBtn.addEventListener("click", toggleMenu);
+
+    mobileLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        // Sprawdzamy, czy menu jest otwarte, patrząc na klasę opacity
+        if (mobileMenu.classList.contains("opacity-100")) {
+          toggleMenu();
+        }
+      });
     });
   }
 </script>
