@@ -4,32 +4,38 @@ export interface CareerEntry {
   title: string;
   company: string;
   description: string;
+  logo?: string; // NOWA WŁAŚCIWOŚĆ: Opcjonalne logo firmy
 }
 
 // Eksportujemy tablicę z danymi o doświadczeniu zawodowym
 export const careerEntries: CareerEntry[] = [
     {
-        date: '2022 - Obecnie',
-        title: 'Inżynier Procesu',
-        company: 'Branża obróbki metali, Holandia',
-        description: 'Odpowiedzialny za optymalizację procesów, poprawę wydajności i jakości oraz wdrażanie udoskonaleń na maszynach CNC.'
+        date: '2025',
+        title: 'Kierownik zespołu cięcia laserowego',
+        company: 'Verschoor Metal Techniek (przez agencje pracy - Covebo) - Holandia',
+        description: 'Odpowiedzialny za optymalizację procesów, poprawę wydajności i jakości oraz wdrażanie udoskonaleń na maszynach CNC.',
+        logo: '/logos/vmt_logo.png' 
     },
     {
-        date: '2020 - 2022',
-        title: 'Specjalista IT',
-        company: 'Turnieje tenisowe',
-        description: 'Zapewnienie wsparcia technicznego i obsługa infrastruktury IT podczas międzynarodowych wydarzeń sportowych.'
+        date: '2022 - 2024',
+        title: 'Specjalista ds. wydarzeń sportowych',
+        company: 'IMG Arena - Gliwice',
+        description: 'Zapewnienie wsparcia technicznego i obsługa infrastruktury IT podczas międzynarodowych wydarzeń sportowych.',
+        logo: '/logos/img_logo.png' 
     },
     {
-        date: '2018 - 2020',
-        title: 'Technolog Produkcji',
-        company: 'Produkcja wiązek kablowych',
-        description: 'Tworzenie i nadzór nad dokumentacją technologiczną oraz procesami produkcyjnymi.'
+        date: '2018 - 2022',
+        title: 'Inżynier produkcji',
+        company: 'TE Connectivity - Bydgoszcz',
+        description: 'Tworzenie i nadzór nad dokumentacją technologiczną oraz procesami produkcyjnymi.',
+        logo: '/logos/te_logo.png'
     },
     {
-        date: '2016 - 2018',
+        date: '2015 - 2018',
         title: 'Technik Serwisu Elektroniki',
-        company: 'Serwis RTV/AGD',
-        description: 'Diagnoza i naprawa urządzeń elektronicznych, bezpośredni kontakt z klientem.'
+        company: 'iQor - Bydgoszcz',
+        description: 'Diagnoza i naprawa urządzeń elektronicznych, bezpośredni kontakt z klientem.',
+        logo: '/logos/iqor_logo.png'
     }
 ]
+

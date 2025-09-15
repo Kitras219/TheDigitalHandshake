@@ -1,0 +1,37 @@
+---
+// ZMIENIONA DEFINICJA WŁAŚCIWOŚCI
+// Komponent przyjmuje teraz proste typy danych, a nie cały obiekt 'post'
+interface Props {
+  title: string;
+  image: string;
+  tags: string[];
+}
+
+const { title, image, tags } = Astro.props;
+---
+
+<div
+  class="flex-shrink-0 w-80 snap-center bg-zinc-900 rounded-lg overflow-hidden shadow-lg"
+>
+  <img
+    src={image}
+    alt={`Zdjęcie dla wpisu ${title}`}
+    class="w-full h-40 object-cover"
+  />
+  <div class="p-4">
+    <div class="flex flex-wrap gap-2 mb-2">
+      {
+        tags.map((tag: string) => (
+          <span class="text-xs bg-amber-400/10 text-amber-400 px-2 py-1 rounded-full">
+            {tag}
+          </span>
+        ))
+      }
+    </div>
+    <h3 class="font-bold text-lg">{title}</h3>
+    <div class="prose prose-sm prose-invert text-white/70 mt-2">
+      <!-- Używamy <slot />, aby wstawić treść renderowaną w pliku nadrzędnym -->
+      <slot />
+    </div>
+  </div>
+</div>

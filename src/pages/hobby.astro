@@ -2,7 +2,24 @@
 import Layout from "../layouts/layout.astro";
 import Navbar from "../components/navbar.astro";
 import Footer from "../components/footer.astro";
-// W przyszłości możemy tu stworzyć i zaimportować komponent karty wpisu
+import HobbyCard from "../components/hobbycard.astro";
+import { getCollection } from "astro:content";
+
+// Pobieramy wszystkie wpisy z kolekcji "hobby"
+const allHobbyPosts = await getCollection("hobby");
+
+// Sortujemy wpisy od najnowszego do najstarszego
+const sortedPosts = allHobbyPosts.sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+
+// Przygotowujemy dane do renderowania z góry.
+const postsWithContent = await Promise.all(
+  sortedPosts.map(async (post) => {
+    const { Content } = await post.render();
+    return { data: post.data, Content };
+  })
+);
 ---
 
 <Layout title="Hobby">
@@ -18,12 +35,29 @@ import Footer from "../components/footer.astro";
       </p>
     </div>
 
-    <!-- Placeholder na przyszłe wpisy -->
-    <div
-      class="mt-16 text-center border border-dashed border-white/20 rounded-lg py-24"
-    >
-      <p class="text-white/50">Wkrótce pojawią się tu pierwsze wpisy...</p>
+    <!-- Karuzela CSS -->
+    <div class="mt-16">
+      <div class="flex overflow-x-auto snap-x snap-mandatory space-x-6 pb-4">
+        {
+          postsWithContent.map(({ data, Content }) => (
+            <HobbyCard title={data.title} image={data.image} tags={data.tags}>
+              <Content />
+            </HobbyCard>
+          ))
+        }
+      </div>
     </div>
   </main>
   <Footer />
 </Layout>
+
+<style>
+  /* Ukrycie paska przewijania dla estetyki, zachowując funkcjonalność */
+  .overflow-x-auto::-webkit-scrollbar {
+    display: none;
+  }
+  .overflow-x-auto {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+</style>
