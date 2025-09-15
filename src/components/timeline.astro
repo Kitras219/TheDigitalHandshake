@@ -1,0 +1,39 @@
+---
+import type { CareerEntry } from '../data/career';
+
+interface Props {
+    entries: CareerEntry[];
+}
+
+const { entries } = Astro.props;
+---
+<div class="relative">
+    <!-- Pionowa linia osi czasu -->
+    <div class="absolute left-1/2 -translate-x-1/2 h-full w-0.5 bg-white/10"></div>
+
+    <!-- Kontener na wpisy -->
+    <div class="space-y-16">
+        {entries.map((entry, index) => (
+            <div class:list={[
+                "relative flex items-center",
+                index % 2 === 0 ? 'justify-start' : 'justify-end'
+            ]}>
+                <!-- Karta z treścią -->
+                <div class:list={[
+                    "w-1/2",
+                    index % 2 === 0 ? 'pr-8' : 'pl-8'
+                ]}>
+                    <div class="bg-zinc-900 p-6 rounded-lg shadow-lg">
+                        <p class="text-amber-400 font-semibold mb-1">{entry.date}</p>
+                        <h3 class="text-xl font-bold mb-2">{entry.title}</h3>
+                        <p class="text-white/80 mb-3">{entry.company}</p>
+                        <p class="text-white/60 text-sm">{entry.description}</p>
+                    </div>
+                </div>
+
+                <!-- Kropka na osi czasu -->
+                <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-amber-400 rounded-full border-4 border-zinc-950"></div>
+            </div>
+        ))}
+    </div>
+</div>

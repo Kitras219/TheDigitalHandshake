@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/layout.astro";
+import Navbar from "../../components/navbar.astro";
+import Footer from "../../components/footer.astro";
+---
+
+<Layout title="Courses & Certificates">
+  <Navbar />
+  <main class="container mx-auto px-4 pt-12 pb-24 sm:pt-16 sm:pb-32">
+    <div class="text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4">
+        Courses & Certificates
+      </h1>
+      <p class="text-xl text-white/70 max-w-2xl mx-auto">
+        Continuous development and expansion of competencies.
+      </p>
+    </div>
+
+    <!-- Placeholder na przyszłe kursy -->
+    <div
+      class="mt-16 text-center border border-dashed border-white/20 rounded-lg py-24"
+    >
+      <p class="text-white/50">
+        A list of completed courses will appear here soon...
+      </p>
+    </div>
+  </main>
+  <Footer />
+</Layout>

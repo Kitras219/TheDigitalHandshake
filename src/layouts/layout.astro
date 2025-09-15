@@ -3,7 +3,6 @@
 import "../styles/global.css";
 
 // Definiujemy właściwości, które może przyjąć nasz layout.
-// Dodajemy opcjonalny opis dla celów SEO.
 interface Props {
   title: string;
   description?: string;
@@ -16,10 +15,10 @@ const {
 
 // Tworzymy obiekt z danymi SEO dla łatwiejszego zarządzania
 const seo = {
-  title: `${title} | Portfolio`,
+  title: `${title} | The Digital Handshake`,
   description: description,
-  image: `${Astro.url.origin}/social-preview.jpg`, // Pełna ścieżka do obrazka podglądu
-  url: Astro.url.href, // Pełna ścieżka do bieżącej strony
+  image: `${Astro.url.origin}/social-preview.jpg`,
+  url: Astro.url.href,
 };
 ---
 
@@ -50,3 +49,49 @@ const seo = {
     <slot />
   </body>
 </html>
+
+<!-- NOWA SEKCJA: Animacja tła -->
+<style is:global>
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    z-index: -1;
+    /* Tworzymy dwie subtelne, złote poświaty za pomocą gradientów radialnych */
+    background: radial-gradient(
+        circle at 20% 20%,
+        rgba(251, 191, 36, 0.07) 0%,
+        transparent 25%
+      ),
+      radial-gradient(
+        circle at 80% 70%,
+        rgba(251, 191, 36, 0.05) 0%,
+        transparent 20%
+      );
+    /* Uruchamiamy animację przesuwania tła */
+    animation: background-pan 30s linear infinite;
+    will-change: transform; /* Optymalizacja wydajności animacji */
+  }
+
+  /* Definicja klatek kluczowych dla naszej animacji */
+  @keyframes background-pan {
+    0% {
+      transform: translate(0%, 0%);
+    }
+    25% {
+      transform: translate(10%, -10%);
+    }
+    50% {
+      transform: translate(0%, -20%);
+    }
+    75% {
+      transform: translate(-10%, 10%);
+    }
+    100% {
+      transform: translate(0%, 0%);
+    }
+  }
+</style>

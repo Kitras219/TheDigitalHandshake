@@ -1,6 +1,7 @@
 ---
-import Layout from '../../layouts/layout.astro';
-import { projects, type Project } from '../../data/projects';
+import Layout from "../../layouts/layout.astro";
+import Navbar from "../../components/navbar.astro";
+import { projects, type Project } from "../../data/projects";
 
 export function getStaticPaths() {
   return projects.map((project) => {
@@ -16,77 +17,138 @@ const hasDocuments = project.documents && project.documents.length > 0;
 ---
 
 <Layout title={project.title} description={project.description}>
-  <main class="container mx-auto px-4 py-24 sm:py-32">
-    <a href="/#projekty" class="inline-flex items-center text-amber-400 hover:underline mb-12">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+  <Navbar />
+
+  <main class="container mx-auto px-4 pt-12 pb-24 sm:pt-16 sm:pb-32">
+    <a
+      href="/#projekty"
+      class="inline-flex items-center text-amber-400 hover:underline mb-12"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 mr-2"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+          clip-rule="evenodd"></path>
       </svg>
       Wróć do projektów
     </a>
 
-    <!-- Nowy, dwukolumnowy layout (Grid) -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-12 items-start mt-8">
-      
-      <!-- Kolumna lewa (1/3 szerokości na dużych ekranach) - Interaktywny przeglądacz -->
+    <!-- Główny nagłówek i opis projektu -->
+    <div class="mb-12">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4">{project.title}</h1>
+      <p class="text-xl text-white/70 max-w-3xl">{project.description}</p>
+    </div>
+
+    <!-- Główny, długi opis całego projektu (przeniesiony tutaj) -->
+    <div class="prose prose-invert prose-lg max-w-none mb-16">
+      <p>{project.longDescription}</p>
+    </div>
+
+    <!-- Dwukolumnowy layout -->
+    <div
+      class="grid grid-cols-1 lg:grid-cols-3 lg:gap-12 items-start border-t border-white/10 pt-12"
+    >
+      <!-- Kolumna lewa (1/3) - Interaktywny przeglądacz -->
       <div class="lg:col-span-1 mb-8 lg:mb-0">
-        {hasDocuments ? (
-          <div>
-            <!-- Główny obrazek (będzie się zmieniał dynamicznie) -->
-            <div class="mb-4 border border-white/10 rounded-lg p-1 bg-zinc-900 shadow-lg">
-              <img 
-                id="main-document-image"
-                src={project.documents![0].image} 
-                alt="Wybrany dokument projektu" 
-                class="w-full h-auto rounded-md"
-              />
+        {
+          hasDocuments ? (
+            <div class="sticky top-28">
+              <div class="mb-4 border border-white/10 rounded-lg p-1 bg-zinc-900 shadow-lg">
+                <img
+                  id="main-document-image"
+                  src={project.documents![0].image}
+                  alt="Wybrany dokument projektu"
+                  class="w-full h-auto rounded-md"
+                />
+              </div>
+              <div class="flex flex-wrap gap-2 justify-center">
+                {project.documents!.map((doc, index) => (
+                  <button
+                    class:list={[
+                      "document-thumbnail w-20 h-20 rounded-md overflow-hidden border-2 transition-all duration-300 transform",
+                      index === 0
+                        ? "border-amber-400 scale-110"
+                        : "border-transparent hover:border-amber-400/50 hover:scale-105",
+                    ]}
+                    data-image-src={doc.image}
+                    data-download-url={doc.downloadUrl}
+                    data-description={doc.description}
+                    data-title={doc.title}
+                  >
+                    <img
+                      src={doc.image}
+                      alt={doc.title}
+                      class="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
-            <!-- Pasek z miniaturkami -->
-            <div class="flex flex-wrap gap-2 justify-center">
-              {project.documents!.map((doc, index) => (
-                <button 
-                  class:list={[
-                    "document-thumbnail w-20 h-20 rounded-md overflow-hidden border-2 transition-all duration-300 transform", 
-                    index === 0 ? 'border-amber-400 scale-110' : 'border-transparent hover:border-amber-400/50 hover:scale-105'
-                  ]}
-                  data-image-src={doc.image}
-                  data-download-url={doc.downloadUrl}
-                  data-description={doc.description}
-                >
-                  <img src={doc.image} alt={doc.title} class="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <!-- Fallback, jeśli projekt nie ma dokumentów -->
-          <img src={project.img} alt={`Główny obrazek dla projektu ${project.title}`} class="rounded-lg shadow-lg w-full h-auto" />
-        )}
+          ) : (
+            <img
+              src={project.img}
+              alt={`Główny obrazek dla projektu ${project.title}`}
+              class="rounded-lg shadow-lg w-full h-auto sticky top-28"
+            />
+          )
+        }
       </div>
 
-      <!-- Kolumna prawa (2/3 szerokości na dużych ekranach) - Treść -->
+      <!-- Kolumna prawa (2/3) - Treść -->
       <div class="lg:col-span-2">
-        <h1 class="text-4xl sm:text-5xl font-bold mb-4">{project.title}</h1>
-        <p class="text-xl text-white/70 mb-8">{project.description}</p>
-        
-        <!-- NOWOŚĆ: Miejsce na dynamiczny opis dokumentu -->
-        <div id="document-description-container" class="prose prose-invert prose-lg max-w-none p-4 bg-zinc-900 rounded-md min-h-[100px] mb-8">
-            <p id="document-description-text">
-                {hasDocuments ? project.documents![0].description : ''}
-            </p>
-        </div>
-        
-        <div class="prose prose-invert prose-lg max-w-none">
-          <p>{project.longDescription}</p>
-        </div>
+        <!-- Tytuł i opis wybranego dokumentu -->
+        {
+          hasDocuments && (
+            <div id="document-details" class="mb-8">
+              <h2
+                id="document-title-text"
+                class="text-2xl font-bold text-amber-400 mb-2"
+              >
+                {project.documents![0].title}
+              </h2>
+              <div
+                id="document-description-container"
+                class="prose prose-invert prose-lg max-w-none min-h-[60px]"
+              >
+                <p id="document-description-text">
+                  {project.documents![0].description || ""}
+                </p>
+              </div>
+            </div>
+          )
+        }
 
-        <!-- Przycisk do pobierania (będzie się zmieniał dynamicznie) -->
-        <div id="download-container" class="mt-12">
-            {hasDocuments && project.documents![0].downloadUrl && (
-                <a id="main-download-button" href={project.documents![0].downloadUrl} download class="inline-flex items-center bg-amber-400 hover:bg-amber-500 text-zinc-900 font-bold py-3 px-6 rounded-md transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-                    Pobierz plik
-                </a>
-            )}
+        <!-- Przycisk do pobierania (przeniesiony tutaj) -->
+        <div id="download-container" class="mt-8">
+          {
+            hasDocuments && project.documents![0].downloadUrl && (
+              <a
+                id="main-download-button"
+                href={project.documents![0].downloadUrl}
+                download
+                class="inline-flex items-center bg-amber-400 hover:bg-amber-500 text-zinc-900 font-bold py-3 px-6 rounded-md transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 mr-2"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Pobierz: {project.documents![0].title}
+              </a>
+            )
+          }
         </div>
       </div>
     </div>
@@ -94,44 +156,60 @@ const hasDocuments = project.documents && project.documents.length > 0;
 </Layout>
 
 <script>
-  const thumbnails = document.querySelectorAll('.document-thumbnail');
-  const mainImage = document.getElementById('main-document-image') as HTMLImageElement;
-  const downloadContainer = document.getElementById('download-container');
-  const descriptionText = document.getElementById('document-description-text') as HTMLParagraphElement;
-  
-  thumbnails.forEach(thumbnail => {
-    thumbnail.addEventListener('click', () => {
-      thumbnails.forEach(t => t.classList.remove('border-amber-400', 'scale-110'));
-      thumbnails.forEach(t => t.classList.add('border-transparent', 'hover:border-amber-400/50', 'hover:scale-105'));
-      
-      thumbnail.classList.remove('border-transparent', 'hover:border-amber-400/50', 'hover:scale-105');
-      thumbnail.classList.add('border-amber-400', 'scale-110');
+  const thumbnails = document.querySelectorAll(".document-thumbnail");
+  const mainImage = document.getElementById(
+    "main-document-image"
+  ) as HTMLImageElement;
+  const downloadContainer = document.getElementById("download-container");
+  const descriptionText = document.getElementById(
+    "document-description-text"
+  ) as HTMLParagraphElement;
+  const titleText = document.getElementById(
+    "document-title-text"
+  ) as HTMLHeadingElement;
 
-      const newImageSrc = thumbnail.getAttribute('data-image-src');
-      const newDownloadUrl = thumbnail.getAttribute('data-download-url');
-      const newDescription = thumbnail.getAttribute('data-description');
+  thumbnails.forEach((thumbnail) => {
+    thumbnail.addEventListener("click", () => {
+      thumbnails.forEach((t) =>
+        t.classList.remove("border-amber-400", "scale-110")
+      );
+      thumbnails.forEach((t) =>
+        t.classList.add(
+          "border-transparent",
+          "hover:border-amber-400/50",
+          "hover:scale-105"
+        )
+      );
 
-      if (mainImage && newImageSrc) {
-        mainImage.src = newImageSrc;
-      }
-      
-      if (descriptionText) {
-        descriptionText.textContent = newDescription || '';
-      }
+      thumbnail.classList.remove(
+        "border-transparent",
+        "hover:border-amber-400/50",
+        "hover:scale-105"
+      );
+      thumbnail.classList.add("border-amber-400", "scale-110");
 
-      if(downloadContainer) {
-        downloadContainer.innerHTML = '';
-        if (newDownloadUrl) {
-            const newButton = document.createElement('a');
-            newButton.id = 'main-download-button';
-            newButton.href = newDownloadUrl;
-            newButton.setAttribute('download', '');
-            newButton.className = 'inline-flex items-center bg-amber-400 hover:bg-amber-500 text-zinc-900 font-bold py-3 px-6 rounded-md transition-colors';
-            newButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>Pobierz plik`;
-            downloadContainer.appendChild(newButton);
+      const newImageSrc = thumbnail.getAttribute("data-image-src");
+      const newDownloadUrl = thumbnail.getAttribute("data-download-url");
+      const newDescription = thumbnail.getAttribute("data-description");
+      const newTitle = thumbnail.getAttribute("data-title");
+
+      if (mainImage && newImageSrc) mainImage.src = newImageSrc;
+      if (descriptionText) descriptionText.textContent = newDescription || "";
+      if (titleText) titleText.textContent = newTitle || "";
+
+      if (downloadContainer) {
+        downloadContainer.innerHTML = "";
+        if (newDownloadUrl && newTitle) {
+          const newButton = document.createElement("a");
+          newButton.id = "main-download-button";
+          newButton.href = newDownloadUrl;
+          newButton.setAttribute("download", "");
+          newButton.className =
+            "inline-flex items-center bg-amber-400 hover:bg-amber-500 text-zinc-900 font-bold py-3 px-6 rounded-md transition-colors";
+          newButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>Pobierz: ${newTitle}`;
+          downloadContainer.appendChild(newButton);
         }
       }
     });
   });
 </script>
-

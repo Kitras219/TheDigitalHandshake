@@ -1,0 +1,24 @@
+---
+import Layout from "../../layouts/layout.astro";
+import Navbar from "../../components/navbar.astro";
+import Footer from "../../components/footer.astro";
+import Timeline from "../../components/timeline.astro";
+import { careerEntries } from "../../data/career";
+---
+
+<Layout title="Work Experience">
+  <Navbar />
+  <main class="container mx-auto px-4 pt-12 pb-24 sm:pt-16 sm:pb-32">
+    <div class="text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4">Work Experience</h1>
+      <p class="text-xl text-white/70 max-w-2xl mx-auto">
+        My career path – from electronics, through IT, to process engineering.
+      </p>
+    </div>
+
+    <div class="mt-16">
+      <Timeline entries={careerEntries} />
+    </div>
+  </main>
+  <Footer />
+</Layout>
