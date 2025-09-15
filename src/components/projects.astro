@@ -1,30 +1,7 @@
 ---
-// Importujemy komponent karty projektu, aby móc go używać w pętli
+// Importujemy dane projektów z naszego nowego, centralnego pliku
+import { projects } from "../data/projects";
 import ProjectCard from "./projectcard.astro";
-
-// Definiujemy dane dla naszych projektów. W przyszłości mogą one pochodzić z CMS-a.
-const projects = [
-  {
-    title: "Optymalizacja Procesu Produkcyjnego",
-    description:
-      "Analiza i wdrożenie usprawnień, które skróciły czas cyklu o 15% i zredukowały ilość odpadów.",
-    img: "/images/project-1.jpg", // POPRAWIONO z imageUrl na img
-    link: "/projekty/optymalizacja-procesu",
-  },
-  {
-    title: "Aplikacja do Monitorowania Maszyn CNC",
-    description:
-      "Koncepcja i prototyp aplikacji webowej do zdalnego monitorowania stanu i wydajności maszyn w czasie rzeczywistym.",
-    img: "/images/project-2.jpg", // POPRAWIONO z imageUrl na img
-    link: "/projekty/aplikacja-cnc",
-  },
-  {
-    title: "Dokumentacja 5s",
-    description: "Tworzenie dokumentacji 5s.",
-    img: "/images/project-3.png", // POPRAWIONO z imageUrl na img
-    link: "/projekty/smart-home",
-  },
-];
 ---
 
 <section id="projekty" class="py-24 sm:py-32 bg-white/5">
@@ -37,16 +14,15 @@ const projects = [
       </p>
     </div>
 
-    <!-- Siatka na karty projektów -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Używamy pętli .map() do wygenerowania karty dla każdego projektu -->
       {
         projects.map((project) => (
           <ProjectCard
             title={project.title}
             description={project.description}
             img={project.img}
-            link={project.link}
+            link={`/projekty/${project.slug}`}
+            imageFit={project.imageFit}
           />
         ))
       }
